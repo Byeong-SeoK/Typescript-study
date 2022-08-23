@@ -1,2 +1,2 @@
 # Typescript-study
-Nomadcoders typescript clone coding
+- Nomadcoders typescript lecture clone coding
