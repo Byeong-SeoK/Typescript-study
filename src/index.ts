@@ -6,7 +6,7 @@
 //코드를 보호하지 못하고 있기 때문이다.
 //그런 이유는 tsconfig.json에서 strict 모드로 설정하지 않았기 때문이다.
 
-import crypto from "crypto";
+import crypto, { createHash } from "crypto";
 
 interface BlockShape{
     hash: string,
@@ -28,5 +28,6 @@ class Block implements BlockShape{
     }
     static calculateHash(prevHash:string, height:number, data:string){
         const toHash = `${prevHash}${height}${data}`;
+        return crypto.createHash("sha256").update(toHash).digest("hex");
     }
 }
