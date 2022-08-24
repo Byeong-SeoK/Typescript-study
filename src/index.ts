@@ -31,3 +31,40 @@ class Block implements BlockShape{
         return crypto.createHash("sha256").update(toHash).digest("hex");
     }
 }
+
+class Blockchain{
+    private blocks: Block[]
+    constructor(){
+        this.blocks = [];
+    }
+    private getPrevHash(){
+        if(this.blocks.length === 0){
+            return "";
+        }
+        else{
+            return this.blocks[this.blocks.length - 1].hash;
+        }
+    }
+    public addBlock(data: string){
+        const newblock = new Block(this.getPrevHash(), this.blocks.length+1, data);
+        this.blocks.push(newblock);
+    }
+    public getBlocks(){
+        //return this.blocks;
+        //private 값 자체를 반환하는 것은 해킹등의 보안적인 문제가 생길 수 있다.
+        //그래서 새로운 배열을 만들어서 private의 정보를 그 배열에 담은 다음
+        //그 새로운 배열을 return하는 것이 보안적으로 더 좋다.
+
+        return [...this.blocks]
+        //[]안에 ...을 함으로써 this.blocks의 정보가 그대로 복사되어 새로운 배열에 저장된다.
+    }
+}
+
+
+const blockchain = new Blockchain();
+
+blockchain.addBlock("First one");
+blockchain.addBlock("Seconde one");
+blockchain.addBlock("Third one");
+
+console.log(blockchain.getBlocks());
